@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>栅格例子</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/zui.min.js"></script>
+    <link href="./css/zui.min.css" rel="stylesheet">
+    <style>
+      .container .row {
+        background-color: #f0ba6b;
+        margin: 20px 0;
+        text-align: center;
+      }
+      .container .row .column {
+        font-size: 30px;
+        background-color: #aaeca4;
+      }
+      .container .row .column:hover {
+        background-color: #7deb73;
+        cursor: pointer;
+      }
+      .desc {
+        font-size: 40px;
+        font-weight: 800;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h2>第1行</h2>
+        <div class="col-md-3 column">1</div>
+        <div class="col-md-3 column">2</div>
+        <div class="col-md-3 column">3</div>
+        <div class="col-md-3 column">4</div>
+      </div>
+      <div class="row">
+        <h2>第2行</h2>
+        <div class="col-md-2 column"></div>
+      </div>
+      <div class="row">
+        <h2>第3行</h2>
+        <div class="col-md-2 column"></div>
+      </div>
+      <div class="row">
+        <h2>第4行</h2>
+        <div class="col-md-2 column"></div>
+      </div>
+    </div>
+    <span class="desc visible-lg">大屏幕</span>
+    <span class="desc visible-md">中屏幕</span>
+    <span class="desc visible-sm">小屏幕</span>
+    <span class="desc visible-xs">超小屏幕</span>
+  </body>
+</html>

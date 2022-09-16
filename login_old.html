@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>zui登录</title>
+        <link rel="stylesheet" href="./css/zui.min.css">
+        <!-- <link rel="stylesheet" media="screen" href="./css/style.css"> -->
+        <style>
+            .panel-body {
+                width: 40%;
+                margin: 0 30%;
+                position: relative;
+            }
+
+            .panel-body .input-control {
+                height: 60px;
+                margin: 10px 0;
+            }
+
+            .panel-body .btn.btn-block {
+                width: 120px;
+                margin: 0 auto;
+                background-color: #f763c3;
+                color: white;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .navbar.navbar-default {
+                display: flex;
+                flex-direction: column;
+                flex: 1 1 auto
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="panel" id="main-content">
+            <div class="panel-heading" style="text-align: center; font-size: 18px;font-weight: bold;">
+                登录
+            </div>
+            <div class="panel-body">
+                <div class="input-control has-icon-left">
+                    <input type="text" class="form-control" placeholder="用户名">
+                    <label for="inputAccountExample1" class="input-control-icon-left"><i class="icon icon-user "></i></label>
+                </div>
+                <div class="input-control has-icon-left has-icon-right">
+                    <input type="email" class="form-control" placeholder="Email">
+                    <label for="inputEmailExample1" class="input-control-icon-left"><i class="icon icon-envelope "></i></label>
+                    <label for="inputEmailExample1" class="input-control-icon-right"><i class="icon icon-check"></i></label>
+                </div>
+                <div class="input-control has-icon-right">
+                    <input type="password" class="form-control" placeholder="密码">
+                    <label for="inputPasswordExample1" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                </div>
+                <div class="input-control has-icon-right">
+                    <input type="text" class="form-control" placeholder="验证码">
+                    <label for="inputPasswordExample1" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                    <label for="inputPasswordExample2" class="input-control-label-right text-right"><img src="./valid_code.jpg" height="100%"/></label>
+                </div>
+                <button class="btn btn-block" type="button">登录</button>
+            </div>
+        </div>
+        <!-- scripts -->
+        <script src="./js/app.js"></script>
+        <script>
+            let rows = document.querySelectorAll('.form-control')
+            const default_val = ['张三', '4341hfh343@outlook.com', 1414141, 6532]
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].value = default_val[i]
+            }
+            let btn = document.querySelector("#main-content > div.panel-body > button")
+            btn.onclick = (e) => {
+                let form_str = '登录成功！\n'
+                rows.forEach(row => {
+                    form_str += row.value.toString() + '\n'
+                })
+                alert(form_str)
+                window.location.href = './main.html'
+            }
+        </script>
+    
+        <!-- stats.js -->
+    </body>
+    <script src="./js/jquery/jquery.js"></script>
+    <script src="./js/zui.min.js"></script>
+</html>

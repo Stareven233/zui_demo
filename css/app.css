@@ -1,0 +1,78 @@
+.login-box {
+  padding: 30px;
+  text-align: center;
+}
+.login-box .panel {
+  width: 60%;
+  margin: 0 auto;
+}
+.login-box .panel-heading span {
+  font-size: 20px;
+  margin-top: 8px;
+  font-size: 28px;
+  color: #37474f;
+  text-shadow: rgba(0, 0, 0, 0.15) 0 0 1px;
+}
+.login-box .panel-body {
+  padding: 50px 40px 40px;
+}
+.login-box .panel-body form {
+  margin-top: 45px;
+  color: #76838f;
+}
+.login-box .panel-body form .form-group {
+  margin: 20px 0 40px 0;
+}
+.login-box .panel-body form .form-group img.validCode:hover {
+  cursor: pointer;
+}
+.login-box .panel-body form .form-control {
+  height: 36px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.login-box .panel-body form .btn-group {
+  display: flex;
+  flex-direction: row;
+}
+.login-box .panel-body form .btn-lg {
+  padding: 10px 16px;
+  width: 100px;
+  margin: 0 auto;
+  background-color: #e05d05;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.login-box .panel-body form .btn-lg:hover {
+  background-color: #f3863e;
+}
+.main-box .navbar .navbar-nav .nav-item.active > a {
+  background-color: #fccb8c;
+  border-color: #fccb8c;
+}
+.main-box .panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main-box .panel .sidemenu {
+  width: 20%;
+}
+.main-box .panel .sidemenu .language-list > li > a {
+  padding: 16px 12px;
+  font-size: 16px;
+}
+.main-box .panel .sidemenu .language-list > li.active > a {
+  background-color: #77d67c;
+  border-color: #77d67c;
+}
+.main-box .panel .content {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  padding: 5%;
+}

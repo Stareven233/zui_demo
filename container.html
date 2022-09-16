@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>响应式设计</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/zui.min.js"></script>
+    <link href="./css/zui.min.css" rel="stylesheet">
+    <style>
+      .normal {
+        background-color: #8fd8a8;
+      }
+      .container {
+        background-color: #f8bd4f;
+      }
+      .container-fluid {
+        background-color: #a98ae4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="normal">
+      <p class="text visible-lg">一般容器 大</p>
+      <p class="text visible-md">一般容器 中</p>
+      <p class="text visible-sm">一般容器 小</p>
+      <p class="text visible-xs">一般容器 超小</p>
+    </div>
+    <div class="container">
+      <p class="text visible-lg">响应式布局容器 大</p>
+      <p class="text visible-md">响应式布局容器 中</p>
+      <p class="text visible-sm">响应式布局容器 小</p>
+      <p class="text visible-xs">响应式布局容器 超小</p>
+    </div>
+    <div class="container-fluid">
+      <p class="text visible-lg">液态化布局容器 大</p>
+      <p class="text visible-md">液态化布局容器 中</p>
+      <p class="text visible-sm">液态化布局容器 小</p>
+      <p class="text visible-xs">液态化布局容器 超小</p>
+    </div>
+  </body>
+</html>
