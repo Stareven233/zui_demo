@@ -1,0 +1,14 @@
+{
+
+	"result": "success",
+
+	"data": [],
+
+	"message": "",
+
+	"pager": {
+		"page": 1,
+		"recTotal": 100,
+		"recPerPage": 12
+	}
+}

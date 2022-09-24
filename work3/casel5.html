@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casel5</title>
+  <link href="../css/zui.min.css" rel="stylesheet">
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/zui.min.js"></script>
+  <link href="../lib/datagrid/zui.datagrid.min.css" rel="stylesheet">
+  <script src="../lib/datagrid/zui.datagrid.min.js"></script>
+  <script>
+    
+    // const bindBtns = () => {    
+    //   const btns = document.querySelectorAll("#myDataGrid .datagrid-container .btn")
+    //   let rowId = ''
+    //   btns.forEach(b => {
+    //     b.addEventListener("click", e => {
+    //       rowId = `id = ${e.target.parentElement.parentElement.dataset.id}`
+    //       console.log(rowId)
+    //       alert(rowId)
+    //     })
+    //   })
+    // }
+    // setTimeout(() => {
+    //   bindBtns()
+    // }, 5000);
+
+    const initGrid = () => {
+      $('#myDataGrid').datagrid({
+        dataSource: {
+          cols: [
+            { name: 'id', label: 'ID', width: 132 },
+            { name: 'account', label: '账号', width: 134 },
+            { name: 'creatAt', label: '创建时间', width: 160 },
+            {
+              name: 'operation',
+              label: '操作',
+              html: true,
+              // 值转换器仅仅影响当前列
+              valueOperator: {
+                getter: function (dataValue, cell, dataGrid) {
+                  return `
+                    <button class='btn-alter btn btn-sm btn-info'>修改</button> 
+                    <button class='btn-del btn btn-sm btn-danger'>删除</button> 
+                    <button class='btn-disable btn btn-sm' style='background-color: gray;'>禁用</button>
+                  `;
+                }
+              }
+            }
+          ],
+          remote: function (params) {
+            return {
+              url: 'admindata.json',
+              type: 'GET',
+              dataType: 'json'
+            };
+          }
+        },
+        onClickCell: function(event, cell, $cell) {
+          let info = ''
+          const rowCount = $cell[0].parentElement.childElementCount - 1
+          if(cell.colIndex !== rowCount || !event.target.classList.contains('btn')) {
+            return
+          }
+          info = `id = ${cell.config.data.id} @${event.target.innerHTML}按钮`
+          console.log(info)
+          alert(info)
+        }
+      });
+    }
+
+    setTimeout(() => {
+      initGrid()
+    }, 0)
+  </script>
+</head>
+
+<body>
+  <div id="myDataGrid" class="datagrid">
+    <div class="datagrid-container"></div>
+    <div class="pager"></div>
+</body>
+
+</html>
+
+<script defer>
+</script>
