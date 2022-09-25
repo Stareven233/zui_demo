@@ -17,6 +17,7 @@ const bindSearchBar = () => {
   document.querySelector('#searchbox > .search-clear-btn').addEventListener('click', e => {
     inputBar.value = ''
   })
+
   inputBar.addEventListener('change', e => {
     // cacheData.map(v => {v.id = 233})
     if(inputBar.value === '') {
@@ -24,6 +25,7 @@ const bindSearchBar = () => {
       dg.renderData()
       return
     }
+
     const queryArr = inputBar.value.split(queryRegex).map((v, idx, arr) => {
       if(idx & 1 === 1) {
         return v
@@ -33,9 +35,10 @@ const bindSearchBar = () => {
       if(inS.length === 2) {
         return `v.${inS[1]}.includes(${inS[0]})`
       }
-      return 'v.' + v.replace(' = ', ' === ')
+      return 'v.' + v.replace(/\s?=\s?/, '===')
     })
-    console.log('op :>> ', queryArr.join(' '))
+
+    // console.log('op :>> ', queryArr.join(' '))
     // '实' in name || adminId < 3
     dg.dataSource.data = cacheData.filter(eval(`v => {
       return ${queryArr.join(' ')}
