@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ex4_axios_login</title>
+    <script src="../js/jquery-3.4.1.min.js"></script> -->
+    <!-- <script src="../js/zui.min.js"></script> -->
+    <!-- <link href="../css/zui.min.css" rel="stylesheet">
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="./axios.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "./vue.esm-browser.js"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="./app.css">
+  </head>
+
+  <body>
+    <div id="app" class="login-box container">
+        <div class="panel">
+            <div class="panel-heading">
+                <span>登录</span>
+            </div>
+
+            <div class="panel-body">
+                <form action="#" method="get">
+                    <div class="form-group input-control has-icon-left">
+                        <input id="inputUsername" name="inputUsername" type="text" class="form-control" v-model="form.account" placeholder="用户名">
+                        <label for="inputUsername" class="input-control-icon-left"><i class="icon icon-user"></i></label>
+                    </div>
+                    <div class="form-group input-control has-icon-right">
+                        <input id="inputPassword" name="inputPassword" type="password" class="form-control" v-model="form.password" placeholder="密码">
+                        <label for="inputPassword" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                    </div>
+                    <div class="btn-group">
+                        <button type="text" class="btn btn-lg btn-block login-btn" @click="login">登录</button>
+                        <button type="reset" class="btn btn-lg btn-block">清空</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+  </body>
+
+</html>
+
+<script type="module">
+  import { createApp } from 'vue'
+
+  createApp({
+    data() {
+      return {
+        form: {
+          account: '',
+          password: '',
+        }
+      }
+    },
+    methods: {
+      login: async function() {
+				// alert("您输入的账号："+this.form.account+" 您输入的密码："+this.form.password);
+        try {
+          const resp = await axios.get("login.json?account=" + this.form.account + "&password=" + this.form.password)
+          console.log(resp.data)
+          if (resp.data.code === 1) {
+            window.location.href = "ex1.html"
+          }
+          alert(resp.data.message)
+        }
+        catch (error) {
+          console.error(error)
+        }
+      }
+    }
+  }).mount('#app')
+</script>

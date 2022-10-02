@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>admin_vue</title>
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/zui.min.js"></script>
+  <link href="../css/zui.min.css" rel="stylesheet">
+  <script src="../lib/fakeData.js"></script>
+  <script src="utils.js"></script>
+  <link rel="stylesheet" href="./app.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "./vue.esm-browser.js"
+      }
+    }
+  </script>
+  <script>
+    let cache = null
+    const refreshData = (num=100) => {
+      if(cache && cache.length > 0) {
+        return cache
+      }
+      const data = []
+      for(let i=0; i<num; i++) {
+        data.push({
+          id: i,
+          name: getNickName(),
+          adminId: random(0, 60),
+          phone: GetPhone(),
+          password: getPassword(random(12, 6)),
+        })
+      }
+      cache = data
+      return data
+    }
+
+    setTimeout(() => {
+      bindSearchBar()
+    }, 0)
+  </script>
+</head>
+
+<body>
+  <div id="app">
+
+    <nav class="menuBar">
+      <div class="input-control search-box-circle has-icon-left has-icon-right" id="searchbox" style="margin-bottom: 10px; width: 800px">
+        <input id="inputSearch" type="search" class="form-control" placeholder="搜索">
+        <label for="inputSearch" class="input-control-icon-left search-icon"><i class="icon icon-search"></i></label>
+        <a href="#" class="input-control-icon-right search-clear-btn"><i class="icon icon-remove"></i></a>
+      </div>
+      <button type="button" class="btn btn-sm btn-primary add-model" data-toggle="modal" data-target="#myModal">新增</button>
+      <div class="modal fade" id="myModal">
+        <div class="login-box modal-dialog">
+          <div class="panel modal-content">
+            
+            <div class="panel-heading">
+              添加
+            </div>
+  
+            <div class="panel-body">
+                <form action="#" method="get">
+                    <div class="form-group input-control has-icon-left">
+                        <input id="inputName" name="inputName" type="text" class="form-control" placeholder="Name" v-model="form.name">
+                        <label for="inputName" class="input-control-icon-left"><i class="icon icon-user"></i></label>
+                    </div>
+                    <div class="form-group input-control has-icon-left">
+                        <input id="inputId" name="inputId" type="text" class="form-control" placeholder="ID" v-model="form.adminId">
+                        <label for="inputId" class="input-control-icon-left"><i class="icon icon-diamond"></i></label>
+                    </div>
+                    <div class="form-group input-control has-icon-left has-icon-right">
+                        <input id="inputPhone" name="inputPhone" type="text" class="form-control" placeholder="Phone" v-model="form.phone">
+                        <label for="inputPhone" class="input-control-icon-left"><i class="icon icon-phone"></i></label>
+                        <label for="inputPhone" class="input-control-icon-right"><i class="icon icon-check"></i></label>
+                    </div>
+                    <div class="form-group input-control has-icon-left">
+                        <input id="inputPassword" name="inputPassword" type="text" class="form-control" placeholder="Password" v-model="form.password">
+                        <label for="inputPassword" class="input-control-icon-left"><i class="icon icon-key"></i></label>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-lg btn-block login-btn" @click="addAdmin">添加</button>
+                        <button type="reset" class="btn btn-lg btn-block">清空</button>
+                    </div>
+                </form>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </nav>
+  
+    <div class="admin-table">
+        <div class="row table-head">
+          <div class="col-md-2 column">name</div>
+          <div class="col-md-1 column">adminId</div>
+          <div class="col-md-3 column">phone</div>
+          <div class="col-md-3 column">password</div>
+          <div class="col-md-3 column">operation</div>
+        </div>
+        <div class="row table-body" v-for="d in dataList">
+          <div class="col-md-2 column">{{d.name}}</div>
+          <div class="col-md-1 column">{{d.adminId}}</div>
+          <div class="col-md-3 column">{{d.phone}}</div>
+          <div class="col-md-3 column">{{d.password}}</div>
+          <div class="col-md-3 column operation" :data-id="d.id">
+            <button type="button" class='btn-alter btn btn-sm' @click="btnAlter">修改</button> 
+            <button type="button" class='btn-del btn btn-sm' @click="btnDel">删除</button> 
+            <button type="button" class='btn-disable btn btn-sm'>禁用</button> 
+          </div>
+        </div>
+    </div>
+  
+    <ul class="pager">
+      <li class="previous"><a href="?page=prev">«</a></li>
+      <li class="active"><a href="?page=1">1</a></li>
+      <li><a href="?page=2">2</a></li>
+      <li><a href="?page=3">3</a></li>
+      <li><a href="#">...</a></li>
+      <li v-for="i in 6"><a :href="calcPage(20+i)">{{20+i}}</a></li>
+      <li class="next"><a href="?page=next">»</a></li>
+    </ul>
+
+  </div>
+</body>
+</html>
+
+
+<script type="module">
+  import { createApp } from 'vue'
+
+  createApp({
+    data() {
+      return {
+        dataList: refreshData(20),
+        form: {
+          name: "null",
+          adminId: 23,
+          phone: 2141321,
+          password: "dr23gr",
+        }
+      }
+    },
+    methods: {
+      calcPage(p) {
+        return `?page=${p}`
+      },
+
+      addAdmin() {
+        this.$data.dataList.unshift(this.form)
+        this.form = {}
+        $('#myModal').modal('hide')
+      },
+
+      btnDel(e) {
+        const dataList = this.$data.dataList
+        const dataId = parseInt(e.target.parentElement.dataset.id)
+        let i = 0
+        while(i < dataList.length) {
+          if(dataId === dataList[i].id) {
+            break
+          }
+          i++
+        }
+        this.$data.dataList.splice(i, 1)
+      },
+
+      btnAlter(e) {
+        const btn = e.target
+        const row = btn.parentElement.parentElement
+        if(btn.classList.contains('active')) {
+          row.removeAttribute('contenteditable')
+          row.style.setProperty('border', '')
+          btn.innerText = '修改'
+          btn.classList.remove('active')
+          this.$data.dataList
+          return ;
+        }
+        row.setAttribute('contenteditable', true)
+        row.style.setProperty('border', 'solid 1px #66ccff')
+        btn.innerText = '确认'
+        btn.classList.add('active')
+      },
+    },
+    computed: {
+      // dataList: () => refreshData(20)
+    }
+  }).mount('#app')
+
+</script>

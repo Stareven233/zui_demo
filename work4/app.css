@@ -1,0 +1,124 @@
+.menuBar {
+  margin: 50px auto 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.menuBar .add-model {
+  font-size: 16px;
+  height: 30px;
+  width: 60px;
+  margin-right: 40px;
+}
+#myDataGrid {
+  margin: 5px auto 20px;
+}
+.login-box {
+  padding: 30px;
+  text-align: center;
+}
+.login-box .panel {
+  width: 60%;
+  margin: 0 auto;
+}
+.login-box .panel-heading {
+  font-size: 18px;
+  margin-top: 8px;
+  color: #37474f;
+  text-shadow: rgba(0, 0, 0, 0.15) 0 0 1px;
+}
+.login-box .panel-body form {
+  color: #76838f;
+}
+.login-box .panel-body form .form-group {
+  margin: 20px 0 40px 0;
+}
+.login-box .panel-body form .form-control {
+  height: 36px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.login-box .panel-body form .btn-group {
+  display: flex;
+  flex-direction: row;
+}
+.login-box .panel-body form .btn-lg {
+  padding: 10px 16px;
+  width: 100px;
+  margin: 0 auto;
+  background-color: #f19d63;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.login-box .panel-body form .btn-lg:hover {
+  background-color: #fcc199;
+}
+.admin-table {
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+}
+.admin-table .row {
+  border-top: solid 1px #d5d5d5;
+  height: 36px;
+  line-height: 36px;
+}
+.admin-table .row:last-child {
+  border-bottom: solid 1px #d5d5d5;
+}
+.admin-table .row .column {
+  border-left: solid 1px #d5d5d5;
+}
+.admin-table .row .column:last-child {
+  border-right: solid 1px #d5d5d5;
+}
+.admin-table .row .column:hover {
+  background-color: #fffbee;
+  cursor: pointer;
+}
+.admin-table .row.table-head {
+  background-color: #f1f1f1;
+  font-size: 18px;
+  font-weight: 600;
+  height: 40px;
+  line-height: 40px;
+}
+.admin-table .row.table-head > .column:hover {
+  background-color: #d3f7d8;
+}
+.admin-table .table-body {
+  font-size: 16px;
+}
+.admin-table .table-body:nth-child(2n) {
+  background-color: #ffffff;
+}
+.admin-table .table-body:nth-child(2n+1) {
+  background-color: #f0fcf2;
+}
+.admin-table .row > .column.operation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+.admin-table .row > .column.operation .btn {
+  width: 60px;
+}
+.admin-table .row > .column.operation .btn:hover {
+  background-color: #c6ffc7;
+}
+.admin-table .row > .column.operation .btn-alter {
+  background-color: #f5dec6;
+}
+.admin-table .row > .column.operation .btn-del {
+  background-color: #fbded9;
+}
+.admin-table .row > .column.operation .btn-disable {
+  background-color: #c0d9e1;
+}

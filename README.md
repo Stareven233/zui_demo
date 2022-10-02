@@ -23,6 +23,11 @@ work3主要是数据表格、表格数据请求与展示更新、借助js语法�
 多条件: id < 8 || adminId = 8 && '快递' in name  
 特殊查询(字符串): phone.startsWith('139')  
 
+## work4预览
+**管理员添加模态框**
+![](assets/img4.jpg)  
+该页面的table由zui栅格系统模拟
+
 ## 后话
 work2里本想用那个Bootbox代替alert，结果依赖一大堆真麻烦  
 work3中的iframe真的折磨，不易操作、交换信息，耗时还严重，就这还要求条件查询，要不是作业真不想用这个    

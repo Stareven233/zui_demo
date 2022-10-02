@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "./vue.esm-browser.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-html="message"></div>
+        <input v-model="message">
+        <div>1<img :src="img" /></div>
+        <div>2<img :src="img" /></div>
+        <button @click="mysubmit()">点我</button>
+        <div>
+            <ul>
+                <li v-for="(item, index) in tableData">{{index}}-{{item}}
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li v-for="(item, index) in tableData">
+                    <div v-html="item" v-if="item==='香蕉'"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                tableData: ["桔子", "苹果", "香蕉"],
+                message: '你好 Vue!',
+                img: '../assets/valid_code.jpg'
+            }
+        }
+    }).mount('#app')
+</script>

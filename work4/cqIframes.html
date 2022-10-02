@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cqIframes</title>
+  <link href="../css/zui.min.css" rel="stylesheet">
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/zui.min.js"></script>
+  <link href="../lib/datagrid/zui.datagrid.min.css" rel="stylesheet">
+  <script src="../lib/datagrid/zui.datagrid.min.js"></script>
+  <script src="../lib/fakeData.js"></script>
+  <script src="utils.js"></script>
+  <link rel="stylesheet" href="./app.css">
+  
+  <script>
+    const queryStr = window.location.href.split('?')[1]?.split('=') || []
+    const frameName = queryStr[0]==='frame'? queryStr[1]: 'outlet'
+    const cols = initCols(frameName)
+    const refreshData = (type, num=100) => {
+      if(cacheData && cacheData.length > 0) {
+        updateData(cacheData)
+      }
+      const data = []
+      for(let i=0; i<num; i++) {
+        d = {
+          id: i,
+          state: 1,
+        }
+        switch (frameName) {
+          case 'outlet':
+            d.name = randomChChoice(random(6, 2)) + '快递中心'
+            d.adminId = random(0, 22)
+            break
+
+          case 'user':
+            d.name = getNickName()
+            d.IDCard = GetIDCard()
+            d.phone = GetPhone()
+            break
+
+          case 'carrier':
+            d.name = GetName()
+            d.adminId = random(0, 22)
+            d.phone = GetPhone()
+            break
+
+          default:
+            break;
+        }
+        data.push(d)
+      }
+      // console.log('datagrid :>> ', datagrid)
+      // dataGridObj = datagrid
+
+      bindSearchBar()
+      // localStorage.setItem('outletData', JSON.stringify(data))
+      cacheData = data
+      updateData(data)
+    }
+
+    const initGrid = () => {
+      $('#myDataGrid').datagrid({
+        dataSource: {
+          cols: cols,
+        },
+        onClickCell: function(event, cell, $cell) {
+          let info = ''
+          const tgt = event.target
+          const row = $cell[0].parentElement
+          console.log('row :>> ', row);
+          const rowCount = row.childElementCount - 1
+          if(cell.colIndex !== rowCount || !tgt.classList.contains('btn')) {
+            return
+          }
+          // const data = JSON.parse(localStorage.getItem('outletData'))
+          const state = cell.config.data.state
+
+          if(tgt.classList.contains('btn-alter')) {
+            // console.log('$cell[0] :>> ', row)
+            if(row.hasAttribute('contenteditable')) {
+              row.removeAttribute('contenteditable')
+              row.style.setProperty('border', '')
+              tgt.innerText = '修改'
+              return
+            }
+            row.setAttribute('contenteditable', true)
+            row.style.setProperty('border', 'solid 3px #66ccff')
+            console.log('row :>> ', row);
+            tgt.innerText = '确认'
+          }
+
+          else if(tgt.classList.contains('btn-del')) {
+            if(state === -1) {
+              for(const c of $cell[0].children) {
+                c.style.display = 'inline-block'
+              }
+              tgt.innerText = '删除'
+              cell.config.data.state = 1
+              return
+            }
+            tgt.innerText = '恢复'
+            for(const c of $cell[0].children) {
+              if(c === tgt) {continue}
+              c.style.display = 'none'
+            }
+            cell.config.data.state = -1
+          }
+
+          else if(tgt.classList.contains('btn-disable')) {
+            if(state === 0) {
+              tgt.innerText = '禁用'
+              cell.config.data.state = 1
+              return
+            }
+            tgt.innerText = '启用'
+            cell.config.data.state = 0
+          }
+        },
+        states: {
+          pager: {page: 1, recPerPage: 12, recTotal: 100}
+        }
+      })
+    }
+    setTimeout(() => {
+      initGrid()
+      refreshData()
+    }, 0)
+  </script>
+  
+</head>
+
+<body>
+  
+  <nav class="menuBar">
+    <div class="input-control search-box-circle has-icon-left has-icon-right" id="searchbox" style="margin-bottom: 10px; width: 800px">
+      <input id="inputSearch" type="search" class="form-control" placeholder="搜索">
+      <label for="inputSearch" class="input-control-icon-left search-icon"><i class="icon icon-search"></i></label>
+      <a href="#" class="input-control-icon-right search-clear-btn"><i class="icon icon-remove"></i></a>
+    </div>
+    <button type="button" class="btn btn-sm btn-primary add-model" data-toggle="modal" data-target="#myModal">新增</button>
+    <div class="modal fade" id="myModal">
+      <div class="login-box modal-dialog">
+        <div class="panel modal-content">
+          
+          <div class="panel-heading">
+            添加
+          </div>
+
+          <div class="panel-body">
+              <form action="#" method="get">
+                  <div class="form-group input-control has-icon-left">
+                      <input id="inputUsername" name="inputUsername" type="text" class="form-control" placeholder="用户名">
+                      <label for="inputUsername" class="input-control-icon-left"><i class="icon icon-user"></i></label>
+                  </div>
+                  <div class="form-group input-control has-icon-left has-icon-right">
+                      <input id="inputEmail" name="inputEmail" type="email" class="form-control" placeholder="Email">
+                      <label for="inputEmail" class="input-control-icon-left"><i class="icon icon-envelope"></i></label>
+                      <label for="inputEmail" class="input-control-icon-right"><i class="icon icon-check"></i></label>
+                  </div>
+                  <div class="form-group input-control has-icon-right">
+                      <input id="inputPassword" name="inputPassword" type="password" class="form-control" placeholder="密码">
+                      <label for="inputPassword" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                  </div>
+                  <div class="btn-group">
+                      <button type="submit" class="btn btn-lg btn-block login-btn">添加</button>
+                      <button type="reset" class="btn btn-lg btn-block">清空</button>
+                  </div>
+              </form>
+          </div>
+            
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="myDataGrid" class="datagrid datagrid-striped">
+    <div class="datagrid-container"></div>
+    <div class="pager"></div>
+    <div class="help">
+      <h2>关于搜索栏条件查询:</h2>
+      <p>列名括号内的英文字符串为列关键词</p>
+      <p>字符串包含: '快递' in name</p>
+      <p>小于: id < 8</p>
+      <p>大于: id > 8</p>
+      <p>等于: adminId = 8</p>
+      <p>多条件: id < 8 || adminId = 8 && '快递' in name</p>
+      <p>特殊查询(字符串): phone.startsWith('139')</p>
+      <p>以上操作符除了in左右必须空格外其他可有可无</p>
+    </div>
+  </div>
+
+</body>
+</html>
