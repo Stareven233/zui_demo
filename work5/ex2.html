@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>vue-快递员列表</title>
+    <!-- zui -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/zui.min.js"></script>
+    <link href="../css/zui.min.css" rel="stylesheet">
+    <script src="../js/axios.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "../js/vue.esm-browser.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+    <div class="with-padding" id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                导航栏
+            </div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal" @click="add()">增加快递员</button>
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="panel login-main">
+                                    <div class="panel-heading">
+                                        添加快递员
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="tab-content col-xs-9">
+                                                        <div class="tab-pane fade active in" id="tab3Content1">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">账号：</span>
+                                                                <input type="text" class="form-control" v-model="form.account" placeholder="账号">
+                                                            </div>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">密码：</span>
+                                                                <input type="text" class="form-control" v-model="form.password" placeholder="密码">
+                                                            </div>
+                                                            <button class="btn btn-block " type="button" @click="submit()">增加</button>
+                                                            <button class="btn btn-block " type="button" @click="submit()">返回</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                快递员列表
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>快递员id</th>
+                            <th>快递员账号</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="(item,index) in tableData">
+                        <td v-html="item.id"></td>
+                        <td v-html="item.account"></td>
+                        <td><button class="btn btn-primary" @click="modify(item)" data-toggle="modal" data-target="#myModal">修改</button>
+                            <button class="btn btn-danger" @click="deleteItem(index)">删除</button>
+                            <button class="btn btn-info">启用</button>
+                            <button class="btn btn-warning">禁用</button>
+                        </td>
+                    </tr>
+                    <tfoot>
+                        <tr>
+                          <td colspan="4" ><ul class="pager">
+                            <li class="previous"><a href="your/nice/url">«</a></li>
+                            <li><a href="your/nice/url">1</a></li>
+                            <li class="active"><a href="your/nice/url">2</a></li>
+                            <li><a href="your/nice/url">3</a></li>
+                            <li><a href="your/nice/url">4</a></li>
+                            <li><a href="your/nice/url">5</a></li>
+                            <li class="next"><a href="your/nice/url">»</a></li>
+                          </ul>
+                            </td>
+                          <td>...</td>
+                        </tr>
+                      </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                tableData: [
+                ],
+                form: {
+                    account:"",
+                    password:""
+                },
+                count:5,
+                modifyItem:""
+            };
+        },
+        methods: {
+            add:function(){
+                this.form={
+                    id:0,
+                    account:""
+                }
+            },
+            submit: function () {
+                if(this.form.id === 0)
+                {
+                this.form.id = this.count;
+                this.count ++;
+                this.tableData.push({...this.form});
+                }
+                else
+                {
+                    this.modifyItem.account = this.form.account;
+                }
+                $('#myModal').modal('hide')
+            },
+            modify:function(item){
+                this.modifyItem = item;
+                this.form = {...item};
+            },
+            deleteItem:function(index){
+                this.tableData.splice(index,1);
+            }
+        },
+            mounted(){
+                axios.get("user_list.json").then(response=>{
+                    this.tableData = response.data.data;
+				    console.log(this.tableData)
+                })
+            }
+    }).mount('#app')
+</script>

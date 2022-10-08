@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>vue-用户列表</title>
+    <!-- zui -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/zui.min.js"></script>
+    <link href="../css/zui.min.css" rel="stylesheet">
+    <script src="../js/axios.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "../js/vue.esm-browser.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+    <div class="with-padding" id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                导航栏
+            </div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal"
+                    @click="add()">增加用户</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="panel login-main">
+                                <div class="panel-heading">
+                                    添加用户
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-xs-3"></div>
+                                    <div class="col-xs-9">
+                                        <div class="tab-content col-xs-9">
+                                            <div class="tab-pane fade active in" id="tab3Content1">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">账号：</span>
+                                                    <input type="text" class="form-control" v-model="form.account" placeholder="账号">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">密码：</span>
+                                                    <input type="text" class="form-control" v-model="form.password" placeholder="密码">
+                                                </div>
+                                                <button class="btn btn-block" type="button" @click="mySubmit">增加</button>
+                                                <button class="btn btn-block" type="button" @click="mySubmit">返回</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                用户列表
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>账号</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="(item, index) in tableData">
+                        <td v-html="item.id"></td>
+                        <td v-html="item.account"></td>
+                        <td>
+                            <button type="button" class="btn btn-primary" @click="modify(item)" data-toggle="modal" data-target="#myModal">修改</button>
+                            <button type="button" class="btn btn-danger" @click="deleteItem(index)">删除</button>
+                            <button type="button" class="btn btn-info">启用</button>
+                            <button type="button" class="btn btn-warning">禁用</button>
+                        </td>
+                    </tr>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <ul class="pager">
+                                    <li class="previous"><a href="your/nice/url">«</a></li>
+                                    <li><a href="your/nice/url">1</a></li>
+                                    <li class="active"><a href="your/nice/url">2</a></li>
+                                    <li><a href="your/nice/url">3</a></li>
+                                    <li><a href="your/nice/url">4</a></li>
+                                    <li><a href="your/nice/url">5</a></li>
+                                    <li class="next"><a href="your/nice/url">»</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                tableData: [],
+                form: {
+                    account: "",
+                    password: ""
+                },
+                count: 4,
+                modifyItem: null
+            };
+        },
+        methods: {
+            add: function () {
+                this.form = {
+                    id: 0,
+                    account: ""
+                }
+            },
+            mySubmit: function () {
+                if(this.form.id === 0) {
+                    this.form.id = ++this.count;
+                    this.form.account += this.count;
+                    this.tableData.push({ ...this.form });
+                }
+                else {
+                    this.modifyItem.account = this.form.account;
+                    this.modifyItem.password = this.form.password;
+                }
+                $('#myModal').modal('hide', 'fit')
+            },
+            modify: function (item) {
+                this.modifyItem = item
+                console.log(this.form)
+                // this.form = item
+                this.form = { ...item }
+                $('#myModal').modal('hide', 'fit')
+            },
+            deleteItem: function (index) {
+                this.tableData.splice(index, 1);
+            }
+        },
+        mounted() {
+            axios.get("user_list.json").then(response => {
+                this.tableData = response.data.data;
+                console.log(this.tableData)
+            })
+        }
+    }).mount('#app')
+</script>

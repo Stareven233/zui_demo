@@ -28,6 +28,11 @@ work3主要是数据表格、表格数据请求与展示更新、借助js语法�
 ![](assets/img4.jpg)  
 该页面的table由zui栅格系统模拟
 
+## work5预览
+**添加、修改、删除列表，并且使用vite+vue3+typescript**
+![](assets/img5.jpg)  
+挺无趣的，按作业要求还得嵌一个zui+jquery，麻烦且难看
+
 ## 后话
 work2里本想用那个Bootbox代替alert，结果依赖一大堆真麻烦  
 work3中的iframe真的折磨，不易操作、交换信息，耗时还严重，就这还要求条件查询，要不是作业真不想用这个    
