@@ -33,6 +33,11 @@ work3主要是数据表格、表格数据请求与展示更新、借助js语法�
 ![](assets/img5.jpg)  
 挺无趣的，按作业要求还得嵌一个zui+jquery，麻烦且难看
 
+## work6简洁
+java19 + tomcat10 + servlet + mysql8 的小例子
+顶级折磨，tomcat10必须Jakarta.servlet，mysql问题也一堆，最后接口成了，页面样式却不见了，真恶心啊
+
+
 ## 后话
 work2里本想用那个Bootbox代替alert，结果依赖一大堆真麻烦  
 work3中的iframe真的折磨，不易操作、交换信息，耗时还严重，就这还要求条件查询，要不是作业真不想用这个    
